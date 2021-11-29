@@ -7,7 +7,7 @@ use think\Model;
 class MemberModel extends Model
 {
     // 确定链接表名
-    protected $table = 'snake_member';
+    protected $table = 'snake_customer';
 
     /**
      * 查询会员

@@ -25,7 +25,7 @@ class Member extends Base
             $selectResult = $member->getMembersByWhere($where, $offset, $limit);
 
             foreach($selectResult as $key=>$vo){
-                $selectResult[$key]['signature'] = '<img src="' . $vo['signature'] . '" width="40px" height="40px">';
+                $selectResult[$key]['headimg'] = '<img src="' . $vo['headimg'] . '" width="40px" height="40px">';
                 $selectResult[$key]['operate'] = showOperate($this->makeButton($vo['id']));
             }
 

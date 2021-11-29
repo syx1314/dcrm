@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-3 control-label">签名：</label>
-                            <input name="signature" id="signature" type="hidden"/>
+                            <input name="headimg" id="headimg" type="hidden"/>
                             <div class="form-inline">
                                 <div class="input-group col-sm-2">
                                     <button type="button" class="layui-btn" id="test1">
@@ -129,7 +129,7 @@
                 ,url: "{:url('member/uploadImg')}" //上传接口
                 ,done: function(res){
                     //上传完毕回调
-                    $("#signature").val(res.data.src);
+                    $("#headimg").val(res.data.src);
                     $("#sm").html('<img src="' + res.data.src + '" style="width:40px;height: 40px;"/>');
                 }
                 ,error: function(){
