@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据备份/还原</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__CSS__/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="__CSS__/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="__CSS__/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="__CSS__/animate.min.css" rel="stylesheet">
+    <link href="__CSS__/style.min.css?v=4.1.0" rel="stylesheet">
+    <link href="__CSS__/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>订单列表&nbsp;&nbsp;总金额：￥{$total_price}&nbsp;&nbsp;利润：￥{$total_price-$cost}</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row input-groups">
+                        <div class="col-md-2 form-inline text-left">
+                            <div class="form-group">
+                                <a class="btn btn-sm btn-white open-reload"><i
+                                        class="glyphicon glyphicon-repeat"></i></a>
+                                <a class="btn btn-sm btn-primary open-window" href="{:url('porder_excel')}" title="手动提单">导入提单</a>
+                            </div>
+                        </div>
+                        <div class="col-md-10 m-b-xs form-inline text-right">
+                            <div class="form-group">
+                                <span class="control-label">开始：</span>
+                                <input type="text" name="begin_time" id="begin_time" value="{:input('begin_time')}"
+                                       class="input-sm input-s-sm form-control" autocomplete="off"
+                                       style="max-width: 100px;">
+                                <span class="control-label">&nbsp;结束：</span>
+                                <input type="text" name="end_time" id="end_time" value="{:input('end_time')}"
+                                       class="input-sm input-s-sm form-control" autocomplete="off"
+                                       style="max-width: 100px;">
+                            </div>
+                            {empty name="adminuser.weixin_appid"}
+                            <div class="form-group">
+
+                                <label class="control-label">渠道:</label>
+
+                            </div>
+                            {/empty}
+
+                            <div class="form-group">
+                                <?php $isps=config('ISP_TEXT'); ?>
+                                <label class="control-label">运营商:</label>
+                                <select class="input-sm form-control input-s-sm inline serach_selects" name="isp"
+                                        style="width: auto;">
+                                    <option value="0">请选择</option>
+                                    {volist name="isps" id="vo"}
+                                    <option value="{$vo}"
+                                    <?php if(input('isp')==$vo){ echo "selected='selected'"; } ?>>{$vo}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <?php $type=config('PRODUCT_TYPE'); ?>
+                                <label class="control-label">类型:</label>
+                                <select class="input-sm form-control input-s-sm inline serach_selects" name="type"
+                                        style="width: auto;">
+                                    <option value="0">请选择</option>
+                                    {volist name="type" id="vo"}
+                                    <option value="{$key}"
+                                    <?php if(input('type')==$key){ echo "selected='selected'"; } ?>>{$vo}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">分类:</label>
+                                <select class="input-sm form-control input-s-sm inline serach_selects" name="cate"
+                                        style="width: auto;">
+                                    <option value="0">请选择</option>
+                                    {volist name="cates" id="vo"}
+                                    <option value="{$vo.id}">
+                                    <?php if(input('cate')==$vo['id']){ echo "selected='selected'"; } ?>>{$vo.cate}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <?php $payway=config('PAYWAY'); ?>
+                                <label class="control-label">支付:</label>
+                                <select class="input-sm form-control input-s-sm inline serach_selects"
+                                        name="pay_way"
+                                        style="width: auto;">
+                                    <option value="0">请选择</option>
+                                    {volist name="payway" id="vo"}
+                                    <option value="{$key}">
+                                    <?php if(input('pay_way')==$key){ echo "selected='selected'"; } ?>>{$vo}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <?php $statusarr=config('PORDER_STATUS');?>
+                                <label class="control-label">状态:</label>
+                                <select class="input-sm form-control input-s-sm inline serach_selects" name="status"
+                                        style="width: auto;">
+                                    <option value="0">请选择</option>
+                                    {volist name="statusarr" id="vo"}
+                                    <option value="{$key}">
+                                    <?php if(input('status')==$key){ echo "selected='selected'"; } ?>>{$vo}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            {empty name="adminuser.weixin_appid"}
+                            <div class="form-group">
+                                <label class="control-label">接口:</label>
+                                <select class="input-sm form-control input-s-sm inline serach_selects"
+                                        name="reapi_id"
+                                        style="width: auto;">
+                                    <option value="0">请选择</option>
+                                    {volist name="reapi" id="vo"}
+                                    <option value="{$vo['id']}">
+                                    <?php if(input('reapi_id')==$vo['id']){ echo "selected='selected'"; } ?>
+                                    >{$vo.name}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                            {/empty}
+                            <div class="form-group">
+                                <label class="control-label">查询条件:</label>
+                                <select class="input-sm form-control input-s-sm inline" name="query_name"
+                                        style="width: auto;">
+                                    <option value="">模糊</option>
+                                    <option value="customer_id">
+                                    <?php if(input('query_name')=='customer_id'){ echo "selected='selected'"; } ?>
+                                    >用户ID</option>
+                                    <option value="order_number">
+                                    <?php if(input('query_name')=='order_number'){ echo "selected='selected'"; } ?>
+                                    >订单号</option>
+                                    <option value="mobile">
+                                    <?php if(input('query_name')=='mobile'){ echo "selected='selected'"; } ?>>充值账号</option>
+                                    <option value="rebate_id">
+                                    <?php if(input('query_name')=='rebate_id'){ echo "selected='selected'"; } ?>
+                                    >返利ID1</option>
+                                    <option value="rebate_id2">
+                                    <?php if(input('query_name')=='rebate_id2'){ echo "selected='selected'"; } ?>
+                                    >返利ID2</option>
+                                    <option value="product_name">
+                                    <?php if(input('query_name')=='product_name'){ echo "selected='selected'"; } ?>
+                                    >套餐</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input type="hidden" name="customer_id" value="{:input('customer_id')}">
+                                    <input type="text" name="key" placeholder="请输入套餐/单号/手机号" value="{:input('key')}"
+                                           class="input-sm form-control">
+                                    <span class="input-group-btn"><button type="button" id="search"
+                                                                          class="btn btn-sm btn-primary"
+                                                                          url="{:url('index')}"> 搜索</button></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <button type="button" id="excel"
+                                            class="btn btn-sm btn-primary"
+                                            url="{:url('out_excel')}"> 导出
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-inline text-left">
+                            {empty name="adminuser.weixin_appid"}
+                            <div class="form-group">
+                                <button class="btn btn-sm btn-info ajax-post confirm" target-form="i-checks"
+                                        href="{:url('set_chenggong')}">
+                                    批量成功
+                                </button>
+                                <button class="btn btn-sm btn-warning ajax-post confirm" target-form="i-checks"
+                                        href="{:url('set_shibai')}">
+                                    批量失败
+                                </button>
+                                <button class="btn btn-sm btn-danger ajax-post confirm" target-form="i-checks"
+                                        href="{:url('refund')}">
+                                    批量退款
+                                </button>
+                                <?php $status=input('status');?>
+                                {eq name="status" value="2"}
+                                <button class="btn btn-sm btn-danger ajax-post confirm" target-form="i-checks"
+                                        href="{:url('resub_api')}">
+                                    批量重新提交接口
+                                </button>
+                                {/eq}
+                            </div>
+                            {/empty}
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" class="i-checks check-all">全选</th>
+                                <th>单号</th>
+                                <th>客户</th>
+                                <th>类型/套餐</th>
+                                <th>充值账号</th>
+                                <th>渠道</th>
+                                <th>支付</th>
+                                <th>状态</th>
+                                <th>时间</th>
+                                <th style="max-width: 50px">一级返利</th>
+                                <th style="max-width: 50px">二级返利</th>
+                                {empty name="adminuser.weixin_appid"}
+                                <th style="min-width: 150px">接口充值</th>
+                                <th>回调/次数</th>
+                                <th>操作</th>
+                                {/empty}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {volist name="_list" id="vo"}
+                            <tr>
+                                <td style="width: 70px;">
+                                    <input type="checkbox" class="i-checks ids" name="id[]" value="{$vo.id}">
+                                </td>
+                                <td>{$vo.order_number}<br/>{$vo.out_trade_num}</td>
+                                <td style="font-size: 12px">[ID:{$vo.customer_id}]&nbsp;{$vo.username}</td>
+                                <td style="font-size: 12px">{:config('PRODUCT_TYPE')[$vo['type']]}<br/>
+                                    {$vo.product_name}
+                                </td>
+                                <td>{$vo.mobile}<br/>
+                                    {$vo.guishu}{$vo.isp}
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>方式：{:config('PAYWAY')[$vo.pay_way]}<br/>
+                                    金额：{$vo.total_price}<br/>
+                                </td>
+                                <td>
+                                    {switch name="vo.status"}
+                                    {case value="1"}
+                                    <span class="label label-default">
+                                    {:config('PORDER_STATUS')[$vo['status']]}
+                                    </span>
+                                    {/case}
+                                    {case value="2"}
+                                    <span class="label label-success">
+                                    {:config('PORDER_STATUS')[$vo['status']]}
+                                    </span>
+                                    {/case}
+                                    {case value="3"}
+                                    <span class="label label-warning">
+                                    {:config('PORDER_STATUS')[$vo['status']]}
+                                    </span>
+                                    {/case}
+                                    {case value="4"}
+                                    <span class="label label-primary">
+                                    {:config('PORDER_STATUS')[$vo['status']]}
+                                    </span>
+                                    {/case}
+                                    {case value="5"}
+                                    <span class="label label-danger">
+                                    {:config('PORDER_STATUS')[$vo['status']]}
+                                    </span>
+                                    {/case}
+                                    {case value="6"}
+                                    <span class="label label-default">
+                                    {:config('PORDER_STATUS')[$vo['status']]}
+                                    </span>
+                                    {/case}
+                                    {default /}
+                                    <span class="label label-default">
+                                    {:config('PORDER_STATUS')[$vo['status']]}
+                                    </span>
+                                    {/switch}
+                                </td>
+                                <td style="font-size: 12px">下单：{$vo.create_time}<br/>
+                                    支付：{$vo.pay_time}<br/>
+                                    完成：{$vo.finish_time}
+                                </td>
+                                <td>
+                                    <div style="max-width: 50px;overflow-x: scroll;overflow-y: hidden;">
+                                        <div style="width: 200px;font-size: 12px;">
+                                            {gt name="vo.rebate_id" value="0"}
+                                            代理：{$vo.rebate_id|get_name}<br/>金额：{$vo.rebate_price}<br/>状态：{$vo.is_rebate?'已返利':'未返利'}
+                                            {/gt}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="max-width: 50px;overflow-x: scroll;overflow-y: hidden;">
+                                        <div style="width: 200px;font-size: 12px;">
+
+                                        </div>
+                                    </div>
+                                </td>
+                                {empty name="adminuser.weixin_appid"}
+                                <td style="font-size: 12px;">
+                                    {eq name="vo.api_open" value="1"}
+                                    <?php $apiarr = json_decode($vo['api_arr'],true);?>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <a class="open-window no-refresh" href="{:url('log?id='.$vo.id)}"
+                                       title="详情">详情日志</a>
+                                    {switch name="vo.status"}
+                                    {case value="1"}
+                                    <a class="text-danger ajax-get confirm" href="{:url('deletes?id='.$vo.id)}"
+                                       title="删除">删除</a>
+                                    {/case}
+                                    {case value="2|3"}
+                                    <a class="ajax-get confirm" href="{:url('set_chenggong?id='.$vo.id)}" title="充值成功">充值成功</a>
+                                    <a class="text-danger ajax-get confirm" href="{:url('set_shibai?id='.$vo.id)}"
+                                       title="充值失败">充值失败</a>
+                                    {/case}
+                                    {case value="5"}
+                                    <a class="text-danger ajax-get confirm" href="{:url('refund?id='.$vo.id)}"
+                                       title="操作退款">操作退款</a>
+                                    {/case}
+                                    {default /}
+                                    {/switch}
+
+                                </td>
+                                {/empty}
+                            </tr>
+                            {/volist}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="page">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+</body>
+</html>

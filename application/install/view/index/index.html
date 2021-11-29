@@ -1,0 +1,27 @@
+{extend name="layout" /}
+{block name="progress"}
+<div class="progress active progress-mini">
+    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%"></div>
+</div>
+{/block}
+{block name="logo"}{/block}
+{block name="content"}
+<div class="box-content step1">
+   
+    {if !$Think.session.reinstall }
+    <div style="height: 300px;text-align: center;padding-top: 25%">
+        <h3>欢迎使用</h3>
+        <h1>杰百纳网络CRM通用后台</h1>
+    </div>
+    <div class="button">
+        <button id="next" class="btn btn-minw btn-default" type="button">{$next}</button>
+    </div>
+    {else}
+ 	<div style="height: 300px;text-align: center;padding-top: 20%">
+        <h3>提示</h3>
+        <h2>您已经安装程序，请勿重新操作！</h2>
+        <h2>尽快删除install目录！！！</h2>
+    </div>
+    {/if}
+</div>
+{/block}

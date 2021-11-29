@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>CRM后台管理系统</title>
+<!--<link rel="stylesheet" type="text/css" href="css/common.css"/>-->
+<link rel="stylesheet" type="text/css" href="__LOGIN__/css/sq.css"/>
+<link rel="stylesheet" type="text/css" href="__LOGIN__/css/bootstrap.min.css"/>
+<style>
+body {
+    width: 100%;
+    height: 100%;
+  background-color: #edeeef;
+}
+*{margin: 0;padding: 0;}
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+}
+#loader {
+    /*display: block;*/
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 340px;
+    height: 340px;
+    margin: -170px 0 0 -170px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #6ab82d;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+#loader:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #0084d0;
+    -webkit-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite;
+}
+/*#loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #FF00FF;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}*/
+@-webkit-keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.title{
+    width: 240px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -24px  0 0 -120px;
+    text-align: center;
+}
+.title p{font-family: "微软雅黑";margin: 0;font-weight: bold;color: #0084d0;letter-spacing: 1px;font-size: 20px;}
+.form-control{height: 50px;border: 0;font-size: 16px;background:rgba(0,0,0,.0001);}
+.input-group-addon{border: 0;background:rgba(0,0,0,.0001);padding-left: 20px;}
+.hides{display: none;}
+@media only screen and (min-width: 320px) and (max-width: 480px){
+
+        #loader {
+        /*display: block;*/
+        position: relative;
+        left: 50%;
+        top: 50%;
+        width: 60vw;
+        height: 60vw;
+        margin: -30vw 0 0 -30vw; 
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #6ab82d;
+        -webkit-animation: spin 3.5s linear infinite;
+        animation: spin 3.5s linear infinite; 
+    }
+    #loader:before {
+        content: "";
+        position: absolute; 
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #0084d0;
+        -webkit-animation: spin 5s linear infinite;
+        animation: spin 5s linear infinite; 
+    }
+    /*#loader:after {
+        content: "";
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        border-radius: 50%;
+        border: 3px solid transparent;
+        border-top-color: #FF00FF;
+        -webkit-animation: spin 1.5s linear infinite;
+        animation: spin 1.5s linear infinite;
+    }*/
+    @-webkit-keyframes spin {
+        0%   {
+            -webkit-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes spin {
+        0%   {
+            -webkit-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        100% {
+            -webkit-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            transform: rotate(360deg);
+        }
+    }
+    .title{
+        width: 240px;
+        height: 50px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -24px  0 0 -120px;
+        text-align: center;
+    }
+    .title p{font-family: "微软雅黑";margin: 0;font-weight: bold;color: #0084d0;letter-spacing: 1px;font-size: 16px;} 
+    .form-control{height: 50px;border: 0;font-size: 16px;background:rgba(0,0,0,.0001);}
+    .input-group-addon{border: 0;background:rgba(0,0,0,.0001);padding-left: 20px;}
+    .hides{display: none;}
+    .findlan{display: none !important;}
+}
+</style>
+
+</head>
+<body>
+
+<div id="preloader">
+  <div id="loader" class="loader"></div>
+  <div class="title">
+    <p style="font-size:14px;">User CRM ManagerSystem</p>
+    <p> CRM管理系统，为用户创造价值</p>
+  </div>
+<div class="login hides">
+    <div class="login_tit">
+        <img src="__LOGIN__/img/yun_logo.png"/>
+        <!--<span>依蓝大数据管理v1.0</span>-->
+    </div>
+    <div class="input-group">
+            <span class="input-group-addon"><img src="__LOGIN__/img/text.png"/></span>
+            <input type="text" class="form-control" id="user_name" placeholder="请输入账号">
+        </div>
+    <div class="input-group">
+            <span class="input-group-addon" style="padding-left: 23px;"><img src="__LOGIN__/img/pss.png"/></span>
+            <input type="password" class="form-control" id="password" placeholder="请输入密码">
+        </div>
+    <div class="input-group">
+            <input type="text" class="form-control" name="code" id="code" placeholder="请输入验证码">
+            <span class="input-group-addon" style="padding-left: 23px;"><img src="{:url('checkVerify')}" onclick="javascript:this.src='{:url('checkVerify')}?tm='+Math.random();" style="float:right;cursor: pointer"/></span>
+        </div>
+    <p class="put" id="err_msg" style="margin:0;"> </p>
+    <div class="login_btn">
+        <a href="index.html">
+            <button class="btn btn-primary login_btn login_btn" id="login_btn">
+                登录
+            </button>
+        </a>
+    </div>
+</div>
+</div>
+<!-- <div class="findlan hides" id="draggable">
+    <div class="lan_bg">
+        <a href="http://uyl.cn/contact.html"><img src="__LOGIN__/img/findme_03.png"/></a> 
+        <p>
+            <img src="__LOGIN__/img/lanclose_03.png"/>
+        </p>
+    </div>
+</div> -->
+<div class="ly_company hides">
+    <p class="banben">Copyright © 2018 stars178.com All Rights Reserved. 杰百纳网络 版权所有 </p>
+    <p class="banben">系统版本：v1.0.01060541</p>
+    <p class="yL"><img src="__LOGIN__/img/banben05_02.png"/></p>
+</div>
+</body>
+<script src="__LOGIN__/js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" src="__LOGIN__/js/jquery-ui.min.js"></script>
+<script src="__LOGIN__/js/unlock.js"></script>
+<script src="__LOGIN__/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__LOGIN__/js/sq.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    $('#draggable').draggable();
+</script>
+<script type="text/javascript">
+    document.onkeydown=function(event){
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if(e && e.keyCode==13){ // enter 键
+            $('#login_btn').click();
+        }
+    };
+    var lock = false;
+    $(function () {
+        $('#login_btn').click(function(){
+            if(lock){
+                return;
+            }
+            lock = true;
+            $('#err_msg').html('');
+            $('#login_btn').removeClass('btn-success').addClass('btn-danger').val('登陆中...');
+            var username = $('#user_name').val();
+            var password = $('#password').val();
+            var code = $('#code').val();
+            $.post("{:url('login/doLogin')}",{'user_name':username, 'password':password, 'code':code},function(data){
+                lock = false;
+                $('#login_btn').val('登录').removeClass('btn-danger').addClass('btn-success');
+                if(data.code!=1){
+                    $('#err_msg').html("<span style='color:red'>"+data.msg+"</span>");
+                    return;
+                }else{
+                    window.location.href=data.data;
+                }
+            });
+            return false;
+        });
+    });
+</script>
+</html>
+
